@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+            android:background="#FC9E26"
+            android:orientation="vertical"
+            android:layout_marginRight="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Contact"
+        android:textSize="40dp"
+        android:fontFamily="@font/allerta_stencil"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#FF404040"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:hint="Enter Name"
+        android:textColorHint="#404040"
+        android:textSize="20dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/allerta_stencil"/>
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:hint="Enter Number"
+        android:textColorHint="#404040"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta_stencil"
+        android:layout_marginBottom="20dp"/>
+
+
+</LinearLayout>

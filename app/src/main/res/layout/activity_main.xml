@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,4 +12,22 @@
        android:layout_height="wrap_content"
        android:id="@+id/recyclercontact"/>
 
-</LinearLayout>
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/floatingActionButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_weight="1"
+       android:clickable="true"
+       app:srcCompat="@drawable/floatbutton"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentRight="true"
+       android:layout_marginBottom="45dp"
+       android:layout_marginRight="35dp"
+       android:tint="#FC9E26"
+       android:backgroundTint="#FC9E26"
+       />
+
+
+</RelativeLayout>
+
+
