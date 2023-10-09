@@ -1,9 +1,14 @@
 package com.example.contactsapp;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +111,18 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 builder.show();
             }
         });
+        
+        holder.callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Calling "+arrContact.get(position).name, Toast.LENGTH_SHORT).show();
+                Intent callintent=new Intent(Intent.ACTION_DIAL);
+                callintent.setData(Uri.parse("tel:"+arrContact.get(position).number));
+                context.startActivity(callintent);
+            }
+
+//
+        });
 
     }
 
@@ -117,7 +134,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName,txtNumber;
         ImageView imgContact;
-        ImageView editButton, deleteButton;
+        ImageView editButton, deleteButton, callButton;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -127,6 +144,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             imgContact=itemView.findViewById(R.id.imgcontact);
             editButton=itemView.findViewById(R.id.editButton);
             deleteButton=itemView.findViewById(R.id.deleteButton);
+            callButton=itemView.findViewById(R.id.callButton);
 
 
         }
