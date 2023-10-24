@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.sax.StartElementListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+
+
+
 public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContactAdapter.ViewHolder> {
     Context context;
     ArrayList<ContactModel> arrContact;
-    RecyclerContactAdapter(Context context, ArrayList<ContactModel> arrContact){
+    ArrayList<Contacts> arrContacts;
+    DatabaseHelper databaseHelper;
+    ContactsDao contactsDao;
+
+
+
+    RecyclerContactAdapter(Context context, ArrayList<ContactModel> arrContact, ArrayList<Contacts> arrContacts){
         this.context=context;
         this.arrContact=arrContact;
+        this.arrContacts = arrContacts;
+        this.contactsDao = contactsDao;
+
 
     }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,11 +55,17 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         return viewHolder;
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.imgContact.setImageResource(arrContact.get(position).img);
         holder.txtName.setText(arrContact.get(position).name);
         holder.txtNumber.setText(arrContact.get(position).number);
+
+        final int currentPosition = position; // Create a final variable
+
+
 
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +108,6 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             }
         });
 
-
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,8 +118,22 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                arrContact.remove(position);
-                                notifyItemRemoved(position);
+
+
+                              //  Toast.makeText(context, contactt.getName(), Toast.LENGTH_SHORT).show();
+
+                                arrContact.remove(currentPosition);
+                                notifyItemRemoved(currentPosition);
+                                // I AM GETTING ERROR DUE TO LINE 125 & 126
+                                // IF I DELETE THESE LINES, I AM ABLE TO PROPERLY DELETE CONTACT FROM THE RECYCLERVIEW BUT NOT FROM THE SQLite
+                                // BUT ATLEAST THE APP IS NOT CRASHING
+
+                                // Remove the contact from the Room database
+                                Contacts contactt = arrContacts.get(currentPosition);
+                                contactsDao.deleteCon(contactt);
+
+
+
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -135,6 +169,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         TextView txtName,txtNumber;
         ImageView imgContact;
         ImageView editButton, deleteButton, callButton;
+       // DatabaseHelper databaseHelper=DatabaseHelper.getDB( context);
+
 
 
         public ViewHolder(@NonNull View itemView) {
