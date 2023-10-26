@@ -172,8 +172,22 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         holder.whatsappbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String userNumber_with_spaces=arrContact.get(position).number;  // The Phone Number May have spaces
+                String userNumber_without_spaces=""; // To store Number Without Spaces
+                for(int i=0;i<userNumber_with_spaces.length();i++)  // To Remove spaces and + from the phone number
+                {
+                    if(userNumber_with_spaces.charAt(i)!=(' ') && userNumber_with_spaces.charAt(i)!=('+') )
+                    {
+                        userNumber_without_spaces = userNumber_without_spaces + userNumber_with_spaces.charAt(i); // Strong number without spaces and + sign
+
+                    }
+                }
+
+                int length=userNumber_without_spaces.length(); // length of filtered phone number
+                String whatsappNumber="91"+userNumber_without_spaces.substring(length-10,length); // concatinating country code 91
                 Toast.makeText(context, "Opening Whatsapp ", Toast.LENGTH_SHORT).show();
-                Intent whatsappintent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+arrContact.get(position).number) );
+                Intent whatsappintent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+whatsappNumber) );
                 context.startActivity(whatsappintent);
             }
 
