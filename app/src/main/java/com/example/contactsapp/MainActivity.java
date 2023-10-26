@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               // Toast.makeText(MainActivity.this, "Clicked On add", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MainActivity.this, "Clicked On add", Toast.LENGTH_SHORT).show();
                 Dialog dialog=new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.add_update_layout);
 
@@ -120,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        adapter=new RecyclerContactAdapter(this, arrContact, arrContacts);
+        //*********** CHANGES HERE *************
+        adapter=new RecyclerContactAdapter(this, arrContact, arrContacts, databaseHelper);
         recyclerview.setAdapter(adapter);
 
         // SYNCING DATA IN ARRAYLIST FROM THE DATABASE

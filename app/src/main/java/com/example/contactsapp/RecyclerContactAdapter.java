@@ -2,6 +2,9 @@ package com.example.contactsapp;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import static kotlinx.coroutines.CoroutineScopeKt.CoroutineScope;
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -37,13 +40,14 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
 
 
-    RecyclerContactAdapter(Context context, ArrayList<ContactModel> arrContact, ArrayList<Contacts> arrContacts){
+    //*********** CHANGES HERE *************
+    RecyclerContactAdapter(Context context, ArrayList<ContactModel> arrContact, ArrayList<Contacts> arrContacts, DatabaseHelper databaseHelper){
         this.context=context;
         this.arrContact=arrContact;
         this.arrContacts = arrContacts;
-        this.contactsDao = contactsDao;
-
-
+        this.databaseHelper = databaseHelper;
+        contactsDao = databaseHelper.contactsDao();
+        Log.w("crash-contacts", contactsDao.getAllContacts().size()+"");
     }
 
 
@@ -57,7 +61,9 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
 
 
+    //*********** CHANGES HERE *************
     @Override
+    @SuppressWarnings("all")  //<<<<< here
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.imgContact.setImageResource(arrContact.get(position).img);
         holder.txtName.setText(arrContact.get(position).name);
@@ -100,6 +106,12 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
                         arrContact.set(position, new ContactModel(R.drawable.contactimage,name,number));
                         notifyItemChanged(position);
+
+                        Contacts contactt = arrContacts.get(currentPosition);
+                        contactt.setName(name);
+                        contactt.setNumber(number);
+                        contactsDao.updateCon(contactt);
+
                         dialog.dismiss();
 
                     }
@@ -119,14 +131,13 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-
-                              //  Toast.makeText(context, contactt.getName(), Toast.LENGTH_SHORT).show();
-
-                                arrContact.remove(currentPosition);
-                                notifyItemRemoved(currentPosition);
-                                // I AM GETTING ERROR DUE TO LINE 125 & 126
-                                // IF I DELETE THESE LINES, I AM ABLE TO PROPERLY DELETE CONTACT FROM THE RECYCLERVIEW BUT NOT FROM THE SQLite
-                                // BUT ATLEAST THE APP IS NOT CRASHING
+                                try{
+                                    arrContact.remove(currentPosition);
+                                    notifyItemRemoved(currentPosition);
+                                }
+                                catch (Exception e){
+                                    Log.w("crash-contacts", e);
+                                }
 
                                 // Remove the contact from the Room database
                                 Contacts contactt = arrContacts.get(currentPosition);
@@ -145,7 +156,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 builder.show();
             }
         });
-        
+
         holder.callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,7 +180,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         TextView txtName,txtNumber;
         ImageView imgContact;
         ImageView editButton, deleteButton, callButton;
-       // DatabaseHelper databaseHelper=DatabaseHelper.getDB( context);
+        // DatabaseHelper databaseHelper=DatabaseHelper.getDB( context);
 
 
 
