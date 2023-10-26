@@ -59,6 +59,15 @@
                     android:src="@drawable/baseline_call_24"
                     app:tint="@color/white" />
 
+                <ImageView
+                    android:id="@+id/whatsappButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/whatsapp"
+                     />
+
 
                 <ImageView
                     android:id="@+id/editButton"

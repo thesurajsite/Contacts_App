@@ -169,6 +169,17 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 //
         });
 
+        holder.whatsappbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Opening Whatsapp ", Toast.LENGTH_SHORT).show();
+                Intent whatsappintent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+arrContact.get(position).number) );
+                context.startActivity(whatsappintent);
+            }
+
+//
+        });
+
     }
 
     @Override
@@ -179,7 +190,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName,txtNumber;
         ImageView imgContact;
-        ImageView editButton, deleteButton, callButton;
+        ImageView editButton, deleteButton, callButton, whatsappbutton;
         // DatabaseHelper databaseHelper=DatabaseHelper.getDB( context);
 
 
@@ -192,6 +203,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             editButton=itemView.findViewById(R.id.editButton);
             deleteButton=itemView.findViewById(R.id.deleteButton);
             callButton=itemView.findViewById(R.id.callButton);
+            whatsappbutton=itemView.findViewById(R.id.whatsappButton);
 
 
         }
