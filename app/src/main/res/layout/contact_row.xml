@@ -56,8 +56,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/baseline_call_24"
-                    app:tint="@color/white" />
+                    android:src="@drawable/call_icon"
+                    app:tint="#57C3F4" />
 
                 <ImageView
                     android:id="@+id/whatsappButton"
@@ -68,15 +68,25 @@
                     android:src="@drawable/whatsapp"
                      />
 
+                <ImageView
+                    android:id="@+id/instagramButton"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/instagram"
+                    />
+
 
                 <ImageView
                     android:id="@+id/editButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/edit"
-                    app:tint="@color/white" />
+                    android:layout_marginTop="14dp"
+                    android:src="@drawable/edit_icon2"
+                    app:tint="@color/white"
+                     />
 
                 <ImageView
                     android:id="@+id/deleteButton"

@@ -179,16 +179,21 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 {
                     if(userNumber_with_spaces.charAt(i)!=(' ') && userNumber_with_spaces.charAt(i)!=('+') )
                     {
-                        userNumber_without_spaces = userNumber_without_spaces + userNumber_with_spaces.charAt(i); // Strong number without spaces and + sign
+                        userNumber_without_spaces = userNumber_without_spaces + userNumber_with_spaces.charAt(i); // to Store number without spaces and + sign
 
                     }
                 }
 
                 int length=userNumber_without_spaces.length(); // length of filtered phone number
-                String whatsappNumber="91"+userNumber_without_spaces.substring(length-10,length); // concatinating country code 91
-                Toast.makeText(context, "Opening Whatsapp ", Toast.LENGTH_SHORT).show();
-                Intent whatsappintent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+whatsappNumber) );
-                context.startActivity(whatsappintent);
+                if(length==10) {
+                    String whatsappNumber = "91" + userNumber_without_spaces.substring(length - 10, length); // concatinating country code 91
+                    Toast.makeText(context, "Opening Whatsapp ", Toast.LENGTH_SHORT).show();
+                    Intent whatsappintent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + whatsappNumber));
+                    context.startActivity(whatsappintent);
+                }
+                else{
+                    Toast.makeText(context, "Invalid WhatsApp Number", Toast.LENGTH_SHORT).show();
+                }
             }
 
 //

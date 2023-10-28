@@ -8,7 +8,13 @@
     android:background="#FF2B2B2B"
     tools:context=".MainActivity">
 
+   <include
+       layout="@layout/toolbar_layout"
+       android:id="@+id/toolbar"
+      />
+
    <androidx.recyclerview.widget.RecyclerView
+       android:layout_marginTop="70dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:id="@+id/recyclercontact"/>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Toolbar_Text">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">#FF2B2B2B</item>
+        <item name="android:fontFamily">@font/allerta_stencil</item>
+        <!-- You can customize other text attributes here -->
+    </style>
+</resources>
