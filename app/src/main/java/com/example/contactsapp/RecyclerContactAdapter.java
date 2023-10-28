@@ -7,6 +7,7 @@ import static kotlinx.coroutines.CoroutineScopeKt.CoroutineScope;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -82,17 +83,20 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 TextView addContactTitle=dialog.findViewById(R.id.addContactTitle);
                 EditText addName=dialog.findViewById(R.id.addName);
                 EditText addNumber=dialog.findViewById(R.id.addNumber);
+                EditText addInstagram=dialog.findViewById(R.id.addInstagram);
                 Button saveButton=dialog.findViewById(R.id.saveButton);
 
                 addContactTitle.setText("Update contact");
                 addName.setText(arrContact.get(position).name);
                 addNumber.setText(arrContact.get(position).number);
+                addInstagram.setText(arrContact.get(position).instagram);
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String name="",number="";
+                        String name="",number="",instagram="";
                         if(!addName.getText().toString().equals("")) {
                             name = addName.getText().toString();
+                            instagram=addInstagram.getText().toString();
                         }
                         else{
                             Toast.makeText(context, "Please Enter Name", Toast.LENGTH_SHORT).show();
@@ -104,7 +108,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             Toast.makeText(context, "Please Enter Number", Toast.LENGTH_SHORT).show();
                         }
 
-                        arrContact.set(position, new ContactModel(R.drawable.contactimage,name,number));
+                        arrContact.set(position, new ContactModel(R.drawable.contactimage,name,number,instagram));
                         notifyItemChanged(position);
 
                         Contacts contactt = arrContacts.get(currentPosition);
@@ -199,6 +203,36 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 //
         });
 
+        holder.instagramButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String instaID=arrContact.get(position).instagram;
+                if(instaID.charAt(0)=='@') {
+                    instaID = instaID.substring(1, instaID.length());
+
+                }
+
+                Toast.makeText(context, "Opening "+instaID, Toast.LENGTH_SHORT).show();
+
+                Uri uri=Uri.parse("https://www.instagram.com/"+instaID);
+                Intent instagram=new Intent(Intent.ACTION_VIEW, uri);
+                Intent webInstagram=new Intent(Intent.ACTION_VIEW, uri);
+
+                instagram.setPackage("com.instagram.android");
+
+                try{
+                    context.startActivity(instagram);
+                }
+                catch (ActivityNotFoundException e){
+                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/"+instaID)));
+
+                }
+            }
+        });
+
+
+
     }
 
     @Override
@@ -209,7 +243,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName,txtNumber;
         ImageView imgContact;
-        ImageView editButton, deleteButton, callButton, whatsappbutton;
+        ImageView editButton, deleteButton, callButton, whatsappbutton, instagramButton;
         // DatabaseHelper databaseHelper=DatabaseHelper.getDB( context);
 
 
@@ -223,6 +257,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             deleteButton=itemView.findViewById(R.id.deleteButton);
             callButton=itemView.findViewById(R.id.callButton);
             whatsappbutton=itemView.findViewById(R.id.whatsappButton);
+            instagramButton=itemView.findViewById(R.id.instagramButton);
+
 
 
         }

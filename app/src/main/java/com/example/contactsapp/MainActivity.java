@@ -58,21 +58,26 @@ public class MainActivity extends AppCompatActivity {
 
                 EditText addName=dialog.findViewById(R.id.addName);
                 EditText addNumber=dialog.findViewById(R.id.addNumber);
+                EditText addInstagram=dialog.findViewById(R.id.addInstagram);
+
                 Button saveButton=dialog.findViewById(R.id.saveButton);
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String name="",number="";
+                        String name="",number="",instagram="";
                         if(!addName.getText().toString().equals("") || !addNumber.getText().toString().equals("")) {
+
                             name = addName.getText().toString();
                             number = addNumber.getText().toString();
-                            arrContact.add(new ContactModel(R.drawable.contactimage,name, number));
+                            instagram=addInstagram.getText().toString();
+
+                            arrContact.add(new ContactModel(R.drawable.contactimage,name, number,instagram));
                             adapter.notifyItemInserted(arrContact.size()-1);
                             recyclerview.scrollToPosition(arrContact.size()-1);
 
                             // Add the contact to the database
-                            databaseHelper.contactsDao().addCon(new Contacts(name, number));
+                            databaseHelper.contactsDao().addCon(new Contacts(name, number, instagram));
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Please Enter Name", Toast.LENGTH_SHORT).show();
@@ -121,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         // SYNCING DATA IN ARRAYLIST FROM THE DATABASE
         //arrContact.clear();
         for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(R.drawable.contactimage, contact.getName(), contact.getNumber()));
+            arrContact.add(new ContactModel(R.drawable.contactimage, contact.getName(), contact.getNumber(), contact.getInstagram()));
         }
         adapter.notifyDataSetChanged();  // Notify the adapter that the data has changed
 
