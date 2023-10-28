@@ -189,8 +189,9 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 }
 
                 int length=userNumber_without_spaces.length(); // length of filtered phone number
-                if(length==10) {
-                    String whatsappNumber = "91" + userNumber_without_spaces.substring(length - 10, length); // concatinating country code 91
+                String whatsappNumber = "91" + userNumber_without_spaces.substring(length - 10, length);
+                if(whatsappNumber.length()==12) {
+                     // concatinating country code 91
                     Toast.makeText(context, "Opening Whatsapp ", Toast.LENGTH_SHORT).show();
                     Intent whatsappintent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + whatsappNumber));
                     context.startActivity(whatsappintent);
