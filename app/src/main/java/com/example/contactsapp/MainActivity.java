@@ -64,25 +64,19 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String name="",number="";
-                        if(!addName.getText().toString().equals("")) {
+                        if(!addName.getText().toString().equals("") || !addNumber.getText().toString().equals("")) {
                             name = addName.getText().toString();
+                            number = addNumber.getText().toString();
+                            arrContact.add(new ContactModel(R.drawable.contactimage,name, number));
+                            adapter.notifyItemInserted(arrContact.size()-1);
+                            recyclerview.scrollToPosition(arrContact.size()-1);
+
+                            // Add the contact to the database
+                            databaseHelper.contactsDao().addCon(new Contacts(name, number));
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Please Enter Name", Toast.LENGTH_SHORT).show();
                         }
-                        if(!addNumber.getText().toString().equals("")){
-                            number = addNumber.getText().toString();
-                        }
-                        else{
-                            Toast.makeText(MainActivity.this, "Please Enter Number", Toast.LENGTH_SHORT).show();
-                        }
-
-                        arrContact.add(new ContactModel(R.drawable.contactimage,name, number));
-                        adapter.notifyItemInserted(arrContact.size()-1);
-                        recyclerview.scrollToPosition(arrContact.size()-1);
-
-                        // Add the contact to the database
-                        databaseHelper.contactsDao().addCon(new Contacts(name, number));
 
                         dialog.dismiss();
                     }
