@@ -1,68 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FC9E26"
-    android:orientation="vertical"
-    android:layout_marginRight="30dp">
+    xmlns:tools="http://schemas.android.com/tools"
 
-    <TextView
-        android:id="@+id/addContactTitle"
-        android:layout_width="wrap_content"
+    android:id="@+id/relativeLayout"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    tools:context=".MainActivity">
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Contact"
-        android:textSize="40dp"
-        android:fontFamily="@font/allerta_stencil"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#FF404040"
-        />
+        android:layout_gravity="fill"
+        android:layout_columnWeight="1"
+        android:layout_rowWeight="1"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="10dp">
 
-    <EditText
-        android:id="@+id/addName"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:hint="Enter Name"
-        android:textColorHint="#404040"
-        android:textSize="20dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/allerta_stencil"/>
-    <EditText
-        android:id="@+id/addNumber"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:hint="Enter Number"
-        android:textColorHint="#404040"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/allerta_stencil"
-        android:layout_marginBottom="20dp"/>
-
-    <EditText
-        android:id="@+id/addInstagram"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:hint="Instagram ID"
-        android:textColorHint="#404040"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/allerta_stencil"
-        android:layout_marginBottom="20dp"/>
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:textSize="30dp"
-        android:fontFamily="@font/allerta_stencil"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/contact_background"
+            android:orientation="vertical">
 
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/addContactTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/allerta_stencil"
+                android:text="Add Contact"
+                android:textColor="#FF404040"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:textSize="40dp" />
+
+
+            <EditText
+                android:id="@+id/addName"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Name"
+                android:fontFamily="@font/allerta_stencil"
+                android:background="#60ffffff"
+                android:textColorHint="#404040"
+                android:textColor="#FF404040"
+                android:textSize="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="30dp"/>
+
+            <EditText
+                android:id="@+id/addNumber"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Number"
+                android:fontFamily="@font/allerta_stencil"
+                android:background="#60ffffff"
+                android:textColorHint="#404040"
+                android:textColor="#FF404040"
+                android:textSize="30dp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
+
+            <EditText
+                android:id="@+id/addInstagram"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="Instagram ID"
+                android:fontFamily="@font/allerta_stencil"
+                android:background="#60ffffff"
+                android:textColorHint="#404040"
+                android:textColor="#FF404040"
+                android:textSize="30dp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"/>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:textSize="30dp"
+                android:fontFamily="@font/allerta_stencil"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"/>
+
+
+
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
