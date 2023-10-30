@@ -62,6 +62,7 @@
 
             <EditText
                 android:id="@+id/addNumber"
+                android:inputType="number"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -101,8 +102,6 @@
                 android:textColor="@color/black"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"/>
-
-
 
 
 

@@ -63,7 +63,7 @@ public class Contacts {
         return instagram;
     }
 
-    public void setInstagram(String number) {
+    public void setInstagram(String instagram) {
         this.instagram = instagram;
     }
 }

@@ -96,7 +96,6 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                         String name="",number="",instagram="";
                         if(!addName.getText().toString().equals("")) {
                             name = addName.getText().toString();
-                            instagram=addInstagram.getText().toString();
                         }
                         else{
                             Toast.makeText(context, "Please Enter Name", Toast.LENGTH_SHORT).show();
@@ -107,6 +106,12 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                         else{
                             Toast.makeText(context, "Please Enter Number", Toast.LENGTH_SHORT).show();
                         }
+                        if(!addInstagram.getText().toString().equals("")){
+                            instagram = addInstagram.getText().toString();
+                        }
+                        else{
+                            Toast.makeText(context, "Please Enter Instagram ID", Toast.LENGTH_SHORT).show();
+                        }
 
                         arrContact.set(position, new ContactModel(R.drawable.contactimage,name,number,instagram));
                         notifyItemChanged(position);
@@ -114,6 +119,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                         Contacts contactt = arrContacts.get(currentPosition);
                         contactt.setName(name);
                         contactt.setNumber(number);
+                        contactt.setInstagram(instagram);
                         contactsDao.updateCon(contactt);
 
                         dialog.dismiss();
