@@ -6,4 +6,7 @@
         <item name="android:fontFamily">@font/allerta_stencil</item>
         <!-- You can customize other text attributes here -->
     </style>
+
+
+
 </resources>

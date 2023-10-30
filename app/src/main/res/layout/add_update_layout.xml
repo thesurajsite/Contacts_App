@@ -25,8 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/Orange"
             android:gravity="center"
-            android:background="#FC9E26"
             android:orientation="vertical">
 
 
@@ -35,12 +35,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
                 android:fontFamily="@font/allerta_stencil"
                 android:text="Add Contact"
                 android:textColor="#FF404040"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
                 android:textSize="40dp" />
 
 
@@ -49,60 +49,59 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:hint="Enter Name"
-                android:fontFamily="@font/allerta_stencil"
-                android:background="#60ffffff"
-                android:textColorHint="#404040"
-                android:textColor="#FF404040"
-                android:textSize="30dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="15dp"
+                android:background="#60ffffff"
+                android:fontFamily="@font/allerta_stencil"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="30dp"/>
+                android:hint="Enter Name"
+                android:textColor="#FF404040"
+                android:textColorHint="#404040"
+                android:textSize="30dp" />
 
             <EditText
                 android:id="@+id/addNumber"
-                android:inputType="number"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:hint="Enter Number"
-                android:fontFamily="@font/allerta_stencil"
-                android:background="#60ffffff"
-                android:textColorHint="#404040"
-                android:textColor="#FF404040"
-                android:textSize="30dp"
-                android:gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:background="#60ffffff"
+                android:fontFamily="@font/allerta_stencil"
+                android:gravity="center_horizontal"
+                android:hint="Enter Number"
+                android:inputType="number"
+                android:textColor="#FF404040"
+                android:textColorHint="#404040"
+                android:textSize="30dp" />
 
             <EditText
                 android:id="@+id/addInstagram"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:hint="Instagram ID"
-                android:fontFamily="@font/allerta_stencil"
-                android:background="#60ffffff"
-                android:textColorHint="#404040"
-                android:textColor="#FF404040"
-                android:textSize="30dp"
-                android:gravity="center_horizontal"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:background="#60ffffff"
+                android:fontFamily="@font/allerta_stencil"
+                android:gravity="center_horizontal"
+                android:hint="Instagram ID"
+                android:textColor="#FF404040"
+                android:textColorHint="#404040"
+                android:textSize="30dp" />
 
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save"
-                android:textSize="30dp"
-                android:fontFamily="@font/allerta_stencil"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/black"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"/>
-
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/allerta_stencil"
+                android:text="Save"
+                android:textColor="@color/black"
+                android:textSize="30dp" />
 
 
         </LinearLayout>
