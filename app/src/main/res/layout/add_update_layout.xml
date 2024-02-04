@@ -9,9 +9,6 @@
     android:background="@android:color/transparent"
     tools:context=".MainActivity">
 
-
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/btn"
         android:layout_width="match_parent"
