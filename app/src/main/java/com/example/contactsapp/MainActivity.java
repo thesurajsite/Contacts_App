@@ -30,20 +30,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //DataBase Starts
-
         DatabaseHelper databaseHelper=DatabaseHelper.getDB(this);
         ContactsDao contactsDao = databaseHelper.contactsDao();
-//
         ArrayList<Contacts> arrContacts =(ArrayList<Contacts>) databaseHelper.contactsDao().getAllContacts();
-
-//        for(int i=0;i<arrContacts.size();i++)
-//        {
-//            Log.d("Data","Name"+arrContacts.get(i).getName()+ "Number"+arrContacts.get(i).getNumber());
-//        }
-
-        // DataBase Ends
 
         RecyclerView recyclerview=findViewById(R.id.recyclercontact);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
