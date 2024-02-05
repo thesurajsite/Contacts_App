@@ -1,10 +1,11 @@
 package com.example.contactsapp;
 
 public class ContactModel {
-    int img,id;
+    int img;
+    long id;
     String name, number, instagram;
 
-    public ContactModel(int img,int id, String name, String number, String instagram) {
+    public ContactModel(int img,long id, String name, String number, String instagram) {
         this.img = img;
         this.id=id;
         this.name = name;

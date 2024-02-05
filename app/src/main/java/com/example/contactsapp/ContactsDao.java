@@ -23,7 +23,7 @@ public interface ContactsDao {
 //    void deleteCon(int id);
 
     @Query("DELETE FROM contacts WHERE id=:id")
-    void deleteCon(int id);
+    void deleteCon(long id);
 
 //    @Query("DELETE FROM contacts WHERE id=:id")
 //    void deleteAttendance(id: Int);

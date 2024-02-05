@@ -109,7 +109,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 addName.setText(arrContact.get(position).name);
                 addNumber.setText(arrContact.get(position).number);
                 addInstagram.setText(arrContact.get(position).instagram);
-                int contactID = arrContact.get(position).id;
+                long contactID = arrContact.get(position).id;
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -132,17 +132,11 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             instagram = addInstagram.getText().toString();
                         }
                         else{
-                            Toast.makeText(context, "Please Enter Instagram ID", Toast.LENGTH_SHORT).show();
+                            //NOTHING
                         }
 
                         arrContact.set(position, new ContactModel(R.drawable.contact_image,contactID,name,number,instagram));
                         notifyItemChanged(position);
-
-//                        Contacts contactt = arrContacts.get(currentPosition);
-//                        contactt.setName(name);
-//                        contactt.setNumber(number);
-//                        contactt.setInstagram(instagram);
-//                        contactsDao.updateCon(contactt);
 
                         contactsDao.updateCon(new Contacts(contactID,name,number,instagram));
 
@@ -166,7 +160,6 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 try{
-                                    Toast.makeText(context, "deleted"+arrContact.get(position).id, Toast.LENGTH_SHORT).show();
                                     contactsDao.deleteCon(arrContact.get(position).id);
                                     arrContact.remove(position);
                                     notifyItemRemoved(position);

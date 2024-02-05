@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!addName.getText().toString().equals("") || !addNumber.getText().toString().equals("")) {
 
                             //Get ContactID from SharedPreferences
-                            int contactID = getContactID();
-                            Toast.makeText(MainActivity.this, ""+contactID, Toast.LENGTH_SHORT).show();
+                            long contactID = getContactID();
 
                             name = addName.getText().toString();
                             number = addNumber.getText().toString();
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram));
 
                             //UPDATE SharedPreferences ContactID
-                            int updatedID=contactID+1;
+                            long updatedID=contactID+1;
                             updateContactID(updatedID);
 
                         }
@@ -128,16 +127,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private int getContactID() {
-        SharedPreferences pref=getSharedPreferences("contactID",MODE_PRIVATE);
-        int contactID=pref.getInt("contactID",1);
+    private long getContactID() {
+        SharedPreferences pref=getSharedPreferences("CONTACTS",MODE_PRIVATE);
+        long contactID=pref.getLong("contactId",1);
         return contactID;
     }
 
-    private void updateContactID(int updatedID){
-        SharedPreferences pref=getSharedPreferences("contactID",MODE_PRIVATE);
+    private void updateContactID(long updatedID){
+        SharedPreferences pref=getSharedPreferences("CONTACTS",MODE_PRIVATE);
         SharedPreferences.Editor editor=pref.edit();
-        editor.putInt("contactID",updatedID);
+        editor.putLong("contactId",updatedID);
         editor.apply();
     }
 

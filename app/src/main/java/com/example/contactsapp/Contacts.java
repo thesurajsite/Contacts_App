@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "contacts")
 public class Contacts {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "number")
@@ -19,7 +19,7 @@ public class Contacts {
 
 
 
-    Contacts(int id, String name, String number, String instagram){
+    Contacts(long id, String name, String number, String instagram){
         this.id=id;
         this.name=name;
         this.number=number;
@@ -28,11 +28,11 @@ public class Contacts {
     }
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
