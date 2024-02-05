@@ -21,10 +21,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -71,6 +74,26 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         holder.txtNumber.setText(arrContact.get(position).number);
 
         final int currentPosition = position; // Create a final variable
+
+        int []arr=new int[1];
+        arr[0]=0;
+
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arr[0]==0)
+                {
+                    arr[0]=1;
+                    holder.linear.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    arr[0]=0;
+                    holder.linear.setVisibility(View.GONE);
+                }
+
+            }
+        });
 
 
 
@@ -251,7 +274,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         TextView txtName,txtNumber;
         ImageView imgContact;
         ImageView editButton, deleteButton, callButton, whatsappbutton, instagramButton;
-        // DatabaseHelper databaseHelper=DatabaseHelper.getDB( context);
+        RelativeLayout relativeLayout;
+        LinearLayout linear;
 
 
 
@@ -265,8 +289,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             callButton=itemView.findViewById(R.id.callButton);
             whatsappbutton=itemView.findViewById(R.id.whatsappButton);
             instagramButton=itemView.findViewById(R.id.instagramButton);
-
-
+            relativeLayout=itemView.findViewById(R.id.relativeLayout);
+            linear=itemView.findViewById(R.id.linear);
 
         }
     }

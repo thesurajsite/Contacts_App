@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ContactModel> arrContact=new ArrayList<>();
     FloatingActionButton floatingActionButton;
     RecyclerContactAdapter adapter;
-
+    RecyclerView recyclerview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +34,17 @@ public class MainActivity extends AppCompatActivity {
         ContactsDao contactsDao = databaseHelper.contactsDao();
         ArrayList<Contacts> arrContacts =(ArrayList<Contacts>) databaseHelper.contactsDao().getAllContacts();
 
-        RecyclerView recyclerview=findViewById(R.id.recyclercontact);
+        recyclerview=findViewById(R.id.recyclercontact);
+        adapter=new RecyclerContactAdapter(this, arrContact, arrContacts, databaseHelper);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.setAdapter(adapter);
+
+
+        for (Contacts contact : arrContacts) {
+            arrContact.add(new ContactModel(R.drawable.contactimage, contact.getName(), contact.getNumber(), contact.getInstagram()));
+        }
+        adapter.notifyDataSetChanged();
+
 
         floatingActionButton=findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -107,18 +116,6 @@ public class MainActivity extends AppCompatActivity {
 //        arrContact.add(new ContactModel(R.drawable.contactimage,"Ankesh IIIT CSE", "7849968913"));
 //        arrContact.add(new ContactModel(R.drawable.contactimage, "Dheeraj Civil","9829393515"));
 
-
-
-        //*********** CHANGES HERE *************
-        adapter=new RecyclerContactAdapter(this, arrContact, arrContacts, databaseHelper);
-        recyclerview.setAdapter(adapter);
-
-        // SYNCING DATA IN ARRAYLIST FROM THE DATABASE
-        //arrContact.clear();
-        for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(R.drawable.contactimage, contact.getName(), contact.getNumber(), contact.getInstagram()));
-        }
-        adapter.notifyDataSetChanged();  // Notify the adapter that the data has changed
 
 
     }
