@@ -27,13 +27,6 @@ public class Contacts {
 
     }
 
-    @Ignore
-    Contacts(String name, String number, String instagram){
-        this.name=name;
-        this.number=number;
-        this.instagram=instagram;
-
-    }
 
     public int getId() {
         return id;

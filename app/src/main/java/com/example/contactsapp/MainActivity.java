@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(R.drawable.contact_image, contact.getName(), contact.getNumber(), contact.getInstagram()));
+            arrContact.add(new ContactModel(R.drawable.contact_image,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram()));
         }
         adapter.notifyDataSetChanged();
 
@@ -56,22 +57,34 @@ public class MainActivity extends AppCompatActivity {
 
                 Button saveButton=dialog.findViewById(R.id.saveButton);
 
+
+
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String name="",number="",instagram="";
                         if(!addName.getText().toString().equals("") || !addNumber.getText().toString().equals("")) {
 
+                            //Get ContactID from SharedPreferences
+                            int contactID = getContactID();
+                            Toast.makeText(MainActivity.this, ""+contactID, Toast.LENGTH_SHORT).show();
+
                             name = addName.getText().toString();
                             number = addNumber.getText().toString();
                             instagram=addInstagram.getText().toString();
 
-                            arrContact.add(new ContactModel(R.drawable.contact_image,name, number,instagram));
+
+                            arrContact.add(new ContactModel(R.drawable.contact_image,contactID,name, number,instagram));
                             adapter.notifyItemInserted(arrContact.size()-1);
                             recyclerview.scrollToPosition(arrContact.size()-1);
 
                             // Add the contact to the database
-                            databaseHelper.contactsDao().addCon(new Contacts(name, number, instagram));
+                            databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram));
+
+                            //UPDATE SharedPreferences ContactID
+                            int updatedID=contactID+1;
+                            updateContactID(updatedID);
+
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Please Enter Name", Toast.LENGTH_SHORT).show();
@@ -114,4 +127,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private int getContactID() {
+        SharedPreferences pref=getSharedPreferences("contactID",MODE_PRIVATE);
+        int contactID=pref.getInt("contactID",1);
+        return contactID;
+    }
+
+    private void updateContactID(int updatedID){
+        SharedPreferences pref=getSharedPreferences("contactID",MODE_PRIVATE);
+        SharedPreferences.Editor editor=pref.edit();
+        editor.putInt("contactID",updatedID);
+        editor.apply();
+    }
+
 }

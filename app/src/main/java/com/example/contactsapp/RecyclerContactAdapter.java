@@ -1,11 +1,14 @@
 package com.example.contactsapp;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,9 +109,12 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 addName.setText(arrContact.get(position).name);
                 addNumber.setText(arrContact.get(position).number);
                 addInstagram.setText(arrContact.get(position).instagram);
+                int contactID = arrContact.get(position).id;
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
                         String name="",number="",instagram="";
                         if(!addName.getText().toString().equals("")) {
                             name = addName.getText().toString();
@@ -129,14 +135,16 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             Toast.makeText(context, "Please Enter Instagram ID", Toast.LENGTH_SHORT).show();
                         }
 
-                        arrContact.set(position, new ContactModel(R.drawable.contact_image,name,number,instagram));
+                        arrContact.set(position, new ContactModel(R.drawable.contact_image,contactID,name,number,instagram));
                         notifyItemChanged(position);
 
-                        Contacts contactt = arrContacts.get(currentPosition);
-                        contactt.setName(name);
-                        contactt.setNumber(number);
-                        contactt.setInstagram(instagram);
-                        contactsDao.updateCon(contactt);
+//                        Contacts contactt = arrContacts.get(currentPosition);
+//                        contactt.setName(name);
+//                        contactt.setNumber(number);
+//                        contactt.setInstagram(instagram);
+//                        contactsDao.updateCon(contactt);
+
+                        contactsDao.updateCon(new Contacts(contactID,name,number,instagram));
 
                         dialog.dismiss();
 
@@ -158,19 +166,14 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 try{
-                                    arrContact.remove(currentPosition);
-                                    notifyItemRemoved(currentPosition);
+                                    Toast.makeText(context, "deleted"+arrContact.get(position).id, Toast.LENGTH_SHORT).show();
+                                    contactsDao.deleteCon(arrContact.get(position).id);
+                                    arrContact.remove(position);
+                                    notifyItemRemoved(position);
                                 }
                                 catch (Exception e){
-                                    Log.w("crash-contacts", e);
+                                    Log.w("crash-in-deleting", e);
                                 }
-
-                                // Remove the contact from the Room database
-                                Contacts contactt = arrContacts.get(currentPosition);
-                                contactsDao.deleteCon(contactt);
-
-
-
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -289,4 +292,5 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
         }
     }
+
 }
