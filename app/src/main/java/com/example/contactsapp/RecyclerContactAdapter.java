@@ -1,10 +1,5 @@
 package com.example.contactsapp;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import static kotlinx.coroutines.CoroutineScopeKt.CoroutineScope;
-
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -12,12 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -78,7 +71,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         int []arr=new int[1];
         arr[0]=0;
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.carryVelocity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(arr[0]==0)
@@ -136,7 +129,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             Toast.makeText(context, "Please Enter Instagram ID", Toast.LENGTH_SHORT).show();
                         }
 
-                        arrContact.set(position, new ContactModel(R.drawable.contactimage,name,number,instagram));
+                        arrContact.set(position, new ContactModel(R.drawable.contact_image,name,number,instagram));
                         notifyItemChanged(position);
 
                         Contacts contactt = arrContacts.get(currentPosition);
@@ -274,7 +267,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         TextView txtName,txtNumber;
         ImageView imgContact;
         ImageView editButton, deleteButton, callButton, whatsappbutton, instagramButton;
-        RelativeLayout relativeLayout;
+//        RelativeLayout relativeLayout;
+        CardView carryVelocity;
         LinearLayout linear;
 
 
@@ -289,7 +283,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             callButton=itemView.findViewById(R.id.callButton);
             whatsappbutton=itemView.findViewById(R.id.whatsappButton);
             instagramButton=itemView.findViewById(R.id.instagramButton);
-            relativeLayout=itemView.findViewById(R.id.relativeLayout);
+//            relativeLayout=itemView.findViewById(R.id.relativeLayout);
+            carryVelocity= itemView.findViewById(R.id.carryVelocity);
             linear=itemView.findViewById(R.id.linear);
 
         }

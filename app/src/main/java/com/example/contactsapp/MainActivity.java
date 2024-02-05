@@ -4,16 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(R.drawable.contactimage, contact.getName(), contact.getNumber(), contact.getInstagram()));
+            arrContact.add(new ContactModel(R.drawable.contact_image, contact.getName(), contact.getNumber(), contact.getInstagram()));
         }
         adapter.notifyDataSetChanged();
 
@@ -71,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                             number = addNumber.getText().toString();
                             instagram=addInstagram.getText().toString();
 
-                            arrContact.add(new ContactModel(R.drawable.contactimage,name, number,instagram));
+                            arrContact.add(new ContactModel(R.drawable.contact_image,name, number,instagram));
                             adapter.notifyItemInserted(arrContact.size()-1);
                             recyclerview.scrollToPosition(arrContact.size()-1);
 
