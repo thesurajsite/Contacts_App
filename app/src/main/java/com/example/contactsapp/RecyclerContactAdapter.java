@@ -182,13 +182,13 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         holder.callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Calling "+arrContact.get(position).name, Toast.LENGTH_SHORT).show();
-                Intent callintent=new Intent(Intent.ACTION_DIAL);
-                callintent.setData(Uri.parse("tel:"+arrContact.get(position).number));
-                context.startActivity(callintent);
+                if(arrContact.get(position).number!="") {
+                    Toast.makeText(context, "Calling " + arrContact.get(position).name, Toast.LENGTH_SHORT).show();
+                    Intent callintent = new Intent(Intent.ACTION_DIAL);
+                    callintent.setData(Uri.parse("tel:" + arrContact.get(position).number));
+                    context.startActivity(callintent);
+                }
             }
-
-//
         });
 
         holder.whatsappbutton.setOnClickListener(new View.OnClickListener() {
@@ -205,16 +205,21 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
                     }
                 }
+//                Toast.makeText(context, userNumber_without_spaces, Toast.LENGTH_SHORT).show();
 
                 int length=userNumber_without_spaces.length(); // length of filtered phone number
-                String whatsappNumber = "91" + userNumber_without_spaces.substring(length - 10, length);
-                if(whatsappNumber.length()==12) {
-                     // concatinating country code 91
-                    Toast.makeText(context, "Opening Whatsapp ", Toast.LENGTH_SHORT).show();
-                    Intent whatsappintent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + whatsappNumber));
-                    context.startActivity(whatsappintent);
+                if(length>=10) {
+                    String whatsappNumber = "91" + userNumber_without_spaces.substring(length - 10, length);
+                    if (whatsappNumber.length() == 12) {
+                        // concatinating country code 91
+                        Toast.makeText(context, "Opening Whatsapp ", Toast.LENGTH_SHORT).show();
+                        Intent whatsappintent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + whatsappNumber));
+                        context.startActivity(whatsappintent);
+                    } else {
+                        Toast.makeText(context, "Invalid WhatsApp Number", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
+                else {
                     Toast.makeText(context, "Invalid WhatsApp Number", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -227,26 +232,34 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             public void onClick(View v) {
 
                 String instaID=arrContact.get(position).instagram;
-                if(instaID.charAt(0)=='@') {
-                    instaID = instaID.substring(1, instaID.length());
+                if(instaID.length()>0) {
+                    if (instaID.charAt(0) == '@') {
+                        instaID = instaID.substring(1, instaID.length());
+                    }
+
+                    Toast.makeText(context, "Opening "+instaID, Toast.LENGTH_SHORT).show();
+
+                    Uri uri=Uri.parse("https://www.instagram.com/"+instaID);
+                    Intent instagram=new Intent(Intent.ACTION_VIEW, uri);
+                    Intent webInstagram=new Intent(Intent.ACTION_VIEW, uri);
+
+                    instagram.setPackage("com.instagram.android");
+
+                    try{
+                        context.startActivity(instagram);
+                    }
+                    catch (ActivityNotFoundException e){
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/"+instaID)));
+
+                    }
+
 
                 }
-
-                Toast.makeText(context, "Opening "+instaID, Toast.LENGTH_SHORT).show();
-
-                Uri uri=Uri.parse("https://www.instagram.com/"+instaID);
-                Intent instagram=new Intent(Intent.ACTION_VIEW, uri);
-                Intent webInstagram=new Intent(Intent.ACTION_VIEW, uri);
-
-                instagram.setPackage("com.instagram.android");
-
-                try{
-                    context.startActivity(instagram);
+                else{
+                    Toast.makeText(context, "Invalid Instagram ID", Toast.LENGTH_SHORT).show();
                 }
-                catch (ActivityNotFoundException e){
-                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/"+instaID)));
 
-                }
+
             }
         });
 

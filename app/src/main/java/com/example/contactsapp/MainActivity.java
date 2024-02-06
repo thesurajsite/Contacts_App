@@ -97,16 +97,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
 //        arrContact.add(new ContactModel(R.drawable.contactimage , "Suraj Verma", "7667484399"));
 //        arrContact.add(new ContactModel(R.drawable.contactimage,"Ravi Shankar", "9835168731"));
 //        arrContact.add(new ContactModel(R.drawable.contactimage, "Sunny Kumar","9142499693"));
@@ -122,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
 //        arrContact.add(new ContactModel(R.drawable.contactimage , "Vedant Vaidya", "7843055348"));
 //        arrContact.add(new ContactModel(R.drawable.contactimage,"Ankesh IIIT CSE", "7849968913"));
 //        arrContact.add(new ContactModel(R.drawable.contactimage, "Dheeraj Civil","9829393515"));
-
-
 
     }
 
