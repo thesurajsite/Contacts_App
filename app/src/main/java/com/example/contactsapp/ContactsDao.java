@@ -19,19 +19,8 @@ public interface ContactsDao {
     @Update
     void updateCon(Contacts contacts);
 
-//    @Delete
-//    void deleteCon(int id);
-
     @Query("DELETE FROM contacts WHERE id=:id")
     void deleteCon(long id);
-
-//    @Query("DELETE FROM contacts WHERE id=:id")
-//    void deleteAttendance(id: Int);
-
-
-
-
-
 
 }
 

@@ -53,7 +53,7 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@string/font"
                 android:gravity="center_horizontal"
-                android:hint="Enter Name"
+                android:hint="Name"
                 android:textColor="#FF404040"
                 android:textColorHint="#404040"
                 android:textSize="30dp" />
@@ -68,7 +68,7 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@string/font"
                 android:gravity="center_horizontal"
-                android:hint="Enter Number"
+                android:hint="Number"
                 android:inputType="number"
                 android:textColor="#FF404040"
                 android:textColorHint="#404040"
@@ -85,6 +85,36 @@
                 android:fontFamily="@string/font"
                 android:gravity="center_horizontal"
                 android:hint="Instagram ID"
+                android:textColor="#FF404040"
+                android:textColorHint="#404040"
+                android:textSize="30dp" />
+
+            <EditText
+                android:id="@+id/x_left"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@string/font"
+                android:gravity="center_horizontal"
+                android:hint="X ID"
+                android:textColor="#FF404040"
+                android:textColorHint="#404040"
+                android:textSize="30dp" />
+
+            <EditText
+                android:id="@+id/labeled"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@string/font"
+                android:gravity="center_horizontal"
+                android:hint="LinkedIn ID"
                 android:textColor="#FF404040"
                 android:textColorHint="#404040"
                 android:textSize="30dp" />

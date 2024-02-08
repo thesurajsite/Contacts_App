@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(R.drawable.contact_image,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram()));
+            arrContact.add(new ContactModel(R.drawable.contact_image,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(),"linkedin","x"));
         }
         adapter.notifyDataSetChanged();
 
@@ -72,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
                             instagram=addInstagram.getText().toString();
 
 
-                            arrContact.add(new ContactModel(R.drawable.contact_image,contactID,name, number,instagram));
+                            arrContact.add(new ContactModel(R.drawable.contact_image,contactID,name, number,instagram,"linkedin","x"));
                             adapter.notifyItemInserted(arrContact.size()-1);
                             recyclerview.scrollToPosition(arrContact.size()-1);
 
                             // Add the contact to the database
-                            databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram));
+                            databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram,"linkedin","x"));
 
                             //UPDATE SharedPreferences ContactID
                             long updatedID=contactID+1;

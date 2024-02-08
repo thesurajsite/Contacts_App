@@ -142,10 +142,10 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             //NOTHING
                         }
 
-                        arrContact.set(position, new ContactModel(R.drawable.contact_image,contactID,name,number,instagram));
+                        arrContact.set(position, new ContactModel(R.drawable.contact_image,contactID,name,number,instagram,"linkedin","x"));
                         notifyItemChanged(position);
 
-                        contactsDao.updateCon(new Contacts(contactID,name,number,instagram));
+                        contactsDao.updateCon(new Contacts(contactID,name,number,instagram,"linkedIn","x"));
 
                         dialog.dismiss();
 
