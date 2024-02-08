@@ -72,7 +72,7 @@
             android:id="@+id/callButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="7dp"
             android:src="@drawable/call_icon"
             />
 
@@ -80,7 +80,7 @@
             android:id="@+id/whatsappButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="7dp"
             android:src="@drawable/whatsapp"
             />
 
@@ -88,25 +88,17 @@
             android:id="@+id/instagramButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="7dp"
             android:src="@drawable/instagram"
             />
 
         <ImageView
             android:id="@+id/editButton"
             android:layout_width="30dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="7dp"
             android:layout_height="30dp"
             app:tint="@color/white"
             android:src="@drawable/info_icon"
-            />
-
-        <ImageView
-            android:id="@+id/deleteButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/baseline_delete_24"
             />
     </LinearLayout>
 

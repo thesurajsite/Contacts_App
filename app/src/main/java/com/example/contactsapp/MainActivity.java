@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DatabaseHelper databaseHelper=DatabaseHelper.getDB(this);
-        ContactsDao contactsDao = databaseHelper.contactsDao();
         ArrayList<Contacts> arrContacts =(ArrayList<Contacts>) databaseHelper.contactsDao().getAllContacts();
 
         recyclerview=findViewById(R.id.recyclercontact);

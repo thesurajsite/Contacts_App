@@ -69,10 +69,16 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         holder.txtName.setText(arrContact.get(position).name);
         holder.txtNumber.setText(arrContact.get(position).number);
 
+
+
         final int currentPosition = position; // Create a final variable
 
         int []arr=new int[1];
         arr[0]=0;
+
+        //carryVelocity IS THE CARDVIEW
+        iconVisibilityControls(holder, position);
+
 
         holder.carryVelocity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +110,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 EditText addNumber=dialog.findViewById(R.id.addNumber);
                 EditText addInstagram=dialog.findViewById(R.id.addInstagram);
                 Button saveButton=dialog.findViewById(R.id.saveButton);
+                ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
 
                 addContactTitle.setText("Update contact");
                 addName.setText(arrContact.get(position).name);
@@ -144,40 +151,51 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
                     }
                 });
+
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder=new AlertDialog.Builder(context)
+                                .setTitle("Delete Contact")
+                                .setIcon(R.drawable.baseline_delete_24)
+                                .setMessage("Do you want to Delete this contact ?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        try{
+                                            contactsDao.deleteCon(arrContact.get(position).id);
+                                            arrContact.remove(position);
+                                            notifyItemRemoved(position);
+                                            dialog.dismiss();
+                                        }
+                                        catch (Exception e){
+                                            Log.w("crash-in-deleting", e);
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                        builder.show();
+
+                    }
+                });
+
+
+
+
+
+
                 dialog.show();
             }
         });
 
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(context)
-                        .setTitle("Delete Contact")
-                        .setIcon(R.drawable.baseline_delete_24)
-                        .setMessage("Do you want to Delete this contact ?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                try{
-                                    contactsDao.deleteCon(arrContact.get(position).id);
-                                    arrContact.remove(position);
-                                    notifyItemRemoved(position);
-                                }
-                                catch (Exception e){
-                                    Log.w("crash-in-deleting", e);
-                                }
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
-                builder.show();
-            }
-        });
 
         holder.callButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,7 +293,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName,txtNumber;
         ImageView imgContact;
-        ImageView editButton, deleteButton, callButton, whatsappbutton, instagramButton;
+        ImageView editButton,callButton, whatsappbutton, instagramButton;
 //        RelativeLayout relativeLayout;
         CardView carryVelocity;
         LinearLayout linear;
@@ -288,15 +306,30 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             txtNumber=itemView.findViewById(R.id.txtNumber);
             imgContact=itemView.findViewById(R.id.imgcontact);
             editButton=itemView.findViewById(R.id.editButton);
-            deleteButton=itemView.findViewById(R.id.deleteButton);
             callButton=itemView.findViewById(R.id.callButton);
             whatsappbutton=itemView.findViewById(R.id.whatsappButton);
             instagramButton=itemView.findViewById(R.id.instagramButton);
-//            relativeLayout=itemView.findViewById(R.id.relativeLayout);
             carryVelocity= itemView.findViewById(R.id.carryVelocity);
             linear=itemView.findViewById(R.id.linear);
 
         }
     }
+
+    private void iconVisibilityControls(ViewHolder holder, int position){
+
+        // INSTAGRAM VISIBILITY CONTROLS
+        if(arrContact.get(position).instagram.isEmpty())
+        {
+            holder.instagramButton.setVisibility(View.GONE);
+        }
+
+        if(arrContact.get(position).number.isEmpty())
+        {
+            holder.callButton.setVisibility(View.GONE);
+            holder.whatsappbutton.setVisibility(View.GONE);
+        }
+
+    }
+
 
 }
