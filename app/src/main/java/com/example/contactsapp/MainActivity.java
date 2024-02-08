@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText addInstagram=dialog.findViewById(R.id.addInstagram);
 
                 Button saveButton=dialog.findViewById(R.id.saveButton);
-
-
+                ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -91,6 +91,16 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+
                 dialog.show();
 
             }

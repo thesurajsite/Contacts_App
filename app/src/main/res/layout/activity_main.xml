@@ -24,13 +24,13 @@
        android:layout_height="wrap_content"
        android:layout_weight="1"
        android:clickable="true"
-       app:srcCompat="@drawable/floatbutton"
+       app:srcCompat="@drawable/baseline_add_24"
        android:layout_alignParentBottom="true"
        android:layout_alignParentRight="true"
        android:layout_marginBottom="45dp"
        android:layout_marginRight="35dp"
-       android:tint="#FC9E26"
-       android:backgroundTint="#FC9E26"
+       android:tint="@color/black"
+       android:backgroundTint="@color/Orange"
        />
 
 

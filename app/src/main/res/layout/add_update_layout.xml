@@ -109,12 +109,14 @@
 
                 <ImageView
                     android:id="@+id/deleteButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/baseline_delete_24"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="60dp"
-                    app:tint="@color/white" />
+                    android:background="@drawable/custom_input"
+                    android:padding="5dp"
+                    app:tint="#F44336" />
 
 
             </LinearLayout>
