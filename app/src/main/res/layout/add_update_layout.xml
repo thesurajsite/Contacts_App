@@ -90,7 +90,6 @@
                 android:textSize="30dp" />
 
             <EditText
-                android:id="@+id/x_left"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -105,7 +104,6 @@
                 android:textSize="30dp" />
 
             <EditText
-                android:id="@+id/labeled"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

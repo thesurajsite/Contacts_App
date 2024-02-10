@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.example.contactsapp.R;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Contacts> arrContacts =(ArrayList<Contacts>) databaseHelper.contactsDao().getAllContacts();
 
         recyclerview=findViewById(R.id.recyclercontact);
+        if(recyclerview==null) Log.w("error111", "true");
         adapter=new RecyclerContactAdapter(this, arrContact, arrContacts, databaseHelper);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);
