@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 Dialog dialog=new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.add_update_layout);
 
+//                ImageView profileImage=dialog.findViewById(R.id.profileImage);
                 EditText addName=dialog.findViewById(R.id.addName);
                 EditText addNumber=dialog.findViewById(R.id.addNumber);
                 EditText addInstagram=dialog.findViewById(R.id.addInstagram);
@@ -67,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Button saveButton=dialog.findViewById(R.id.saveButton);
                 ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
+
+//                profileImage.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        imagePicker();
+//                    }
+//                });
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -90,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
                             arrContact.add(new ContactModel(R.drawable.contact_image,contactID,name, number,instagram,x,linkedin));
                             adapter.notifyItemInserted(arrContact.size()-1);
-                            recyclerview.scrollToPosition(arrContact.size()-1);
+//                            recyclerview.scrollToPosition(arrContact.size()-1);
 
                             // Add the contact to the database
                             databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram,x,linkedin));
@@ -98,6 +106,13 @@ public class MainActivity extends AppCompatActivity {
                             //UPDATE SharedPreferences ContactID
                             long updatedID=contactID+1;
                             updateContactID(updatedID);
+
+                            //ARRAY SORTING
+                            arrContactSorting();
+
+                            //SORTING THE ARRAY AGAIN
+                            arrContactSorting();
+                            adapter.notifyDataSetChanged();
 
                         }
                         else{
@@ -154,15 +169,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void arrContactSorting(){
-        Comparator<ContactModel> comparator = new Comparator<ContactModel>() {
+        Collections.sort(arrContact, new Comparator<ContactModel>() {
             @Override
-            public int compare(ContactModel contact1, ContactModel contact2) {
-                // Define your comparison logic here, based on the properties of ContactModel
-                // For example, to sort by name:
-                return contact1.name.compareTo(contact2.name);
+            public int compare(ContactModel o1, ContactModel o2) {
+                return o1.name.compareToIgnoreCase(o2.name);
             }
-        };
-        Collections.sort(arrContact, comparator);
+        });
+
+    }
+
+    private void imagePicker(){
+        Toast.makeText(this, "image picker", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -27,8 +27,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
-
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContactAdapter.ViewHolder> {
@@ -143,6 +143,10 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
                             contactsDao.updateCon(new Contacts(contactID,name,number,instagram,x,linkedin));
 
+                            //SORTING THE ARRAY AGAIN
+                            arrContactSorting();
+                            notifyDataSetChanged();
+
                             dialog.dismiss();
                         }
                         else{
@@ -169,6 +173,13 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                                             contactsDao.deleteCon(arrContact.get(position).id);
                                             arrContact.remove(position);
                                             notifyItemRemoved(position);
+
+                                            //SORTING THE ARRAY AGAIN
+                                            arrContactSorting();
+                                            notifyDataSetChanged();
+
+
+
                                             dialog.dismiss();
                                         }
                                         catch (Exception e){
@@ -413,5 +424,15 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         else{
             holder.linkedinButton.setVisibility(View.GONE);
         }
+    }
+
+    private void arrContactSorting(){
+        Collections.sort(arrContact, new Comparator<ContactModel>() {
+            @Override
+            public int compare(ContactModel o1, ContactModel o2) {
+                return o1.name.compareToIgnoreCase(o2.name);
+            }
+        });
+
     }
 }
