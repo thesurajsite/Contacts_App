@@ -75,12 +75,10 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
         int []arr=new int[1];
         arr[0]=0;
-
-        //carryVelocity IS THE CARDVIEW
+        
         iconVisibilityControls(holder, position);
 
-
-        holder.carryVelocity.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(arr[0]==0)
@@ -109,6 +107,9 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 EditText addName=dialog.findViewById(R.id.addName);
                 EditText addNumber=dialog.findViewById(R.id.addNumber);
                 EditText addInstagram=dialog.findViewById(R.id.addInstagram);
+                EditText addX=dialog.findViewById(R.id.addX);
+                EditText addLinkedin=dialog.findViewById(R.id.addLinkedin);
+
                 Button saveButton=dialog.findViewById(R.id.saveButton);
                 ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
 
@@ -116,38 +117,37 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 addName.setText(arrContact.get(position).name);
                 addNumber.setText(arrContact.get(position).number);
                 addInstagram.setText(arrContact.get(position).instagram);
+                addX.setText(arrContact.get(position).x);
+                addLinkedin.setText(arrContact.get(position).linkedin);
                 long contactID = arrContact.get(position).id;
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
 
-                        String name="",number="",instagram="";
-                        if(!addName.getText().toString().equals("")) {
-                            name = addName.getText().toString();
+                        String name="",number="",instagram="",x="",linkedin="";
+
+                        name = addName.getText().toString();
+                        number = addNumber.getText().toString();
+                        instagram = addInstagram.getText().toString();
+                        x=addX.getText().toString();
+                        linkedin=addLinkedin.getText().toString();
+
+                        if(!name.isEmpty() || !number.isEmpty()){
+
+                            if(name.isEmpty()){ name=number; }
+
+                            arrContact.set(position, new ContactModel(R.drawable.contact_image,contactID,name,number,instagram,x,linkedin));
+                            notifyItemChanged(position);
+
+                            contactsDao.updateCon(new Contacts(contactID,name,number,instagram,x,linkedin));
+
+                            dialog.dismiss();
                         }
                         else{
-                            Toast.makeText(context, "Please Enter Name", Toast.LENGTH_SHORT).show();
-                        }
-                        if(!addNumber.getText().toString().equals("")){
-                            number = addNumber.getText().toString();
-                        }
-                        else{
-                            Toast.makeText(context, "Please Enter Number", Toast.LENGTH_SHORT).show();
-                        }
-                        if(!addInstagram.getText().toString().equals("")){
-                            instagram = addInstagram.getText().toString();
-                        }
-                        else{
-                            //NOTHING
+                            Toast.makeText(context, "Please Enter Name or Number", Toast.LENGTH_SHORT).show();
                         }
 
-                        arrContact.set(position, new ContactModel(R.drawable.contact_image,contactID,name,number,instagram,"linkedin","x"));
-                        notifyItemChanged(position);
-
-                        contactsDao.updateCon(new Contacts(contactID,name,number,instagram,"linkedIn","x"));
-
-                        dialog.dismiss();
 
                     }
                 });
@@ -209,7 +209,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             }
         });
 
-        holder.whatsappbutton.setOnClickListener(new View.OnClickListener() {
+        holder.whatsappButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -281,7 +281,19 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             }
         });
 
-
+        holder.xButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, arrContact.get(position).x, Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        holder.linkedinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, arrContact.get(position).linkedin, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -293,9 +305,9 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName,txtNumber;
         ImageView imgContact;
-        ImageView editButton,callButton, whatsappbutton, instagramButton;
+        ImageView editButton,callButton, whatsappButton, instagramButton, xButton, linkedinButton;
 //        RelativeLayout relativeLayout;
-        CardView carryVelocity;
+        CardView cardView;
         LinearLayout linear;
 
 
@@ -307,9 +319,12 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
             imgContact=itemView.findViewById(R.id.imgcontact);
             editButton=itemView.findViewById(R.id.editButton);
             callButton=itemView.findViewById(R.id.callButton);
-            whatsappbutton=itemView.findViewById(R.id.whatsappButton);
+            whatsappButton=itemView.findViewById(R.id.whatsappButton);
             instagramButton=itemView.findViewById(R.id.instagramButton);
-            carryVelocity= itemView.findViewById(R.id.carryVelocity);
+            xButton=itemView.findViewById(R.id.XButton);
+            linkedinButton=itemView.findViewById(R.id.linkedinButton);
+
+            cardView= itemView.findViewById(R.id.cardView);
             linear=itemView.findViewById(R.id.linear);
 
         }
@@ -326,7 +341,14 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         if(arrContact.get(position).number.isEmpty())
         {
             holder.callButton.setVisibility(View.GONE);
-            holder.whatsappbutton.setVisibility(View.GONE);
+            holder.whatsappButton.setVisibility(View.GONE);
+        }
+
+        if(arrContact.get(position).linkedin.isEmpty()){
+            holder.linkedinButton.setVisibility((View.GONE));
+        }
+        if(arrContact.get(position).x.isEmpty()){
+            holder.xButton.setVisibility(View.GONE);
         }
 
     }

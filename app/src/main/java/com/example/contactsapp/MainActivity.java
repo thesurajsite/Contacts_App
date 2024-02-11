@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(R.drawable.contact_image,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(),"linkedin","x"));
+            arrContact.add(new ContactModel(R.drawable.contact_image,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(), contact.getX(), contact.getLinkedin()));
         }
         adapter.notifyDataSetChanged();
 
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 EditText addName=dialog.findViewById(R.id.addName);
                 EditText addNumber=dialog.findViewById(R.id.addNumber);
                 EditText addInstagram=dialog.findViewById(R.id.addInstagram);
+                EditText addX=dialog.findViewById(R.id.addX);
+                EditText addLinkedin=dialog.findViewById(R.id.addLinkedin);
 
                 Button saveButton=dialog.findViewById(R.id.saveButton);
                 ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
@@ -64,23 +66,29 @@ public class MainActivity extends AppCompatActivity {
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String name="",number="",instagram="";
-                        if(!addName.getText().toString().equals("") || !addNumber.getText().toString().equals("")) {
+                        String name="",number="",instagram="",x="",linkedin="";
 
-                            //Get ContactID from SharedPreferences
-                            long contactID = getContactID();
+                        //Get ContactID from SharedPreferences
+                        long contactID = getContactID();
 
-                            name = addName.getText().toString();
-                            number = addNumber.getText().toString();
-                            instagram=addInstagram.getText().toString();
+                        name = addName.getText().toString();
+                        number = addNumber.getText().toString();
+                        instagram=addInstagram.getText().toString();
+                        x=addX.getText().toString();
+                        linkedin=addLinkedin.getText().toString();
 
+                        if(!name.isEmpty() || !number.isEmpty()) {
 
-                            arrContact.add(new ContactModel(R.drawable.contact_image,contactID,name, number,instagram,"linkedin","x"));
+                            if(name.isEmpty()){
+                                name=number;
+                            }
+
+                            arrContact.add(new ContactModel(R.drawable.contact_image,contactID,name, number,instagram,x,linkedin));
                             adapter.notifyItemInserted(arrContact.size()-1);
                             recyclerview.scrollToPosition(arrContact.size()-1);
 
                             // Add the contact to the database
-                            databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram,"linkedin","x"));
+                            databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram,x,linkedin));
 
                             //UPDATE SharedPreferences ContactID
                             long updatedID=contactID+1;

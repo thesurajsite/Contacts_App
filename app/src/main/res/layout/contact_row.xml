@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="@color/LightGrey"
-    android:id="@+id/carryVelocity"
+    android:id="@+id/cardView"
     android:background="@color/LightGrey"
     app:cardCornerRadius="10dp"
     android:layout_margin="2dp"
