@@ -34,7 +34,7 @@
                 app:cardCornerRadius="100dp">
 
                 <ImageView
-                    android:id="@+id/progress_circular"
+                    android:id="@+id/profileImage"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/contact_image"

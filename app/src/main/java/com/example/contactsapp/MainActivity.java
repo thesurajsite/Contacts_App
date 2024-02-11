@@ -1,12 +1,16 @@
 package com.example.contactsapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     RecyclerContactAdapter adapter;
     RecyclerView recyclerview;
+    ImageView profileImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Dialog dialog=new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.add_update_layout);
 
-//                ImageView profileImage=dialog.findViewById(R.id.profileImage);
+                profileImage=dialog.findViewById(R.id.profileImage); //SET AS A CLASS VARIABLE
                 EditText addName=dialog.findViewById(R.id.addName);
                 EditText addNumber=dialog.findViewById(R.id.addNumber);
                 EditText addInstagram=dialog.findViewById(R.id.addInstagram);
@@ -69,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
                 Button saveButton=dialog.findViewById(R.id.saveButton);
                 ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
 
-//                profileImage.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        imagePicker();
-//                    }
-//                });
+                profileImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imagePicker();
+
+                    }
+                });
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -179,8 +186,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void imagePicker(){
-        Toast.makeText(this, "image picker", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "image picker", Toast.LENGTH_SHORT).show();
+
+        Intent iGallery=new Intent(Intent.ACTION_PICK);
+        iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(iGallery, 123);
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==123){
+            profileImage.setImageURI(data.getData());
+            profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+
+        }
+    }
 }
