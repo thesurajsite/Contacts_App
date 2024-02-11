@@ -114,6 +114,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
 
                 addContactTitle.setText("Update contact");
+
                 addName.setText(arrContact.get(position).name);
                 addNumber.setText(arrContact.get(position).number);
                 addInstagram.setText(arrContact.get(position).instagram);
@@ -185,12 +186,6 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
                     }
                 });
-
-
-
-
-
-
                 dialog.show();
             }
         });
@@ -258,17 +253,16 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                     Toast.makeText(context, "Opening "+instaID, Toast.LENGTH_SHORT).show();
 
                     Uri uri=Uri.parse("https://www.instagram.com/"+instaID);
-                    Intent instagram=new Intent(Intent.ACTION_VIEW, uri);
                     Intent webInstagram=new Intent(Intent.ACTION_VIEW, uri);
 
-                    instagram.setPackage("com.instagram.android");
+                    Intent appInstagram=new Intent(Intent.ACTION_VIEW, uri);
+                    appInstagram.setPackage("com.instagram.android");
 
                     try{
-                        context.startActivity(instagram);
+                        context.startActivity(appInstagram);
                     }
                     catch (ActivityNotFoundException e){
-                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/"+instaID)));
-
+                        context.startActivity(webInstagram);
                     }
 
 
@@ -284,14 +278,69 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         holder.xButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, arrContact.get(position).x, Toast.LENGTH_SHORT).show();
+                String xID=arrContact.get(position).x;
+                if(xID.length()>0){
+                    if(xID.charAt(0)=='@') {
+                        xID = xID.substring(1, xID.length());
+                    }
+
+                    Toast.makeText(context, "Opening "+xID, Toast.LENGTH_SHORT).show();
+
+                    Uri uri=Uri.parse("https://www.twitter.com/"+xID);
+                    Intent webX=new Intent(Intent.ACTION_VIEW, uri);
+
+                    Intent appX=new Intent(Intent.ACTION_VIEW, uri);
+                    appX.setPackage("com.twitter.android");
+
+                    try{
+                        context.startActivity(appX);
+                    }
+                    catch(ActivityNotFoundException e){
+                        context.startActivity(webX);
+                    }
+
+                }
+                else{
+                    Toast.makeText(context, "Invalid X ID", Toast.LENGTH_SHORT).show();
+
+                }
+
+
             }
         });
         
         holder.linkedinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, arrContact.get(position).linkedin, Toast.LENGTH_SHORT).show();
+
+                String linkedinID=arrContact.get(position).linkedin;
+                if(linkedinID.length()>0){
+                    if(linkedinID.charAt(0)=='@'){
+                        linkedinID=linkedinID+linkedinID.substring(1,linkedinID.length());
+                    }
+
+                    Toast.makeText(context, "Opening "+linkedinID, Toast.LENGTH_SHORT).show();
+
+                    Uri uri=Uri.parse("https://www.linkedin.com/in/"+linkedinID);
+                    Intent webLinkedin=new Intent(Intent.ACTION_VIEW, uri);
+
+                    Intent appLinkedin=new Intent(Intent.ACTION_VIEW, uri);
+                    appLinkedin.setPackage("com.linkedin.android.home");
+
+
+                    try{
+                        context.startActivity(appLinkedin);
+
+                    }
+                    catch (ActivityNotFoundException e){
+                        context.startActivity(webLinkedin);
+                    }
+
+
+                }
+                else{
+
+                }
             }
         });
 
@@ -332,26 +381,37 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
     private void iconVisibilityControls(ViewHolder holder, int position){
 
-        // INSTAGRAM VISIBILITY CONTROLS
-        if(arrContact.get(position).instagram.isEmpty())
-        {
-            holder.instagramButton.setVisibility(View.GONE);
+        // CALL AND WHATSAPP VISIBILITY CONTROLS
+        if(!arrContact.get(position).number.isEmpty()){
+            holder.callButton.setVisibility(View.VISIBLE);
+            holder.whatsappButton.setVisibility(View.VISIBLE);
         }
-
-        if(arrContact.get(position).number.isEmpty())
-        {
+        else{
             holder.callButton.setVisibility(View.GONE);
             holder.whatsappButton.setVisibility(View.GONE);
         }
 
-        if(arrContact.get(position).linkedin.isEmpty()){
-            holder.linkedinButton.setVisibility((View.GONE));
+        // INSTAGRAM VISIBILITY CONTROLS
+        if (!arrContact.get(position).instagram.isEmpty()) {
+            holder.instagramButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.instagramButton.setVisibility(View.GONE);
         }
-        if(arrContact.get(position).x.isEmpty()){
+
+        // X VISIBILITY CONTROLS
+        if(!arrContact.get(position).x.isEmpty()){
+            holder.xButton.setVisibility(View.VISIBLE);
+        }
+        else{
             holder.xButton.setVisibility(View.GONE);
         }
 
+        // LINKEDIN VISIBILITY CONTROLS
+        if(!arrContact.get(position).linkedin.isEmpty()){
+            holder.linkedinButton.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.linkedinButton.setVisibility(View.GONE);
+        }
     }
-
-
 }

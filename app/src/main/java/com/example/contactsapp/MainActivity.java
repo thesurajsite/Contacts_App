@@ -18,6 +18,9 @@ import com.example.contactsapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<ContactModel> arrContact=new ArrayList<>();
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         for (Contacts contact : arrContacts) {
             arrContact.add(new ContactModel(R.drawable.contact_image,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(), contact.getX(), contact.getLinkedin()));
         }
+
+        arrContactSorting();
         adapter.notifyDataSetChanged();
 
 
@@ -146,6 +151,19 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor=pref.edit();
         editor.putLong("contactId",updatedID);
         editor.apply();
+    }
+
+    private void arrContactSorting(){
+        Comparator<ContactModel> comparator = new Comparator<ContactModel>() {
+            @Override
+            public int compare(ContactModel contact1, ContactModel contact2) {
+                // Define your comparison logic here, based on the properties of ContactModel
+                // For example, to sort by name:
+                return contact1.name.compareTo(contact2.name);
+            }
+        };
+        Collections.sort(arrContact, comparator);
+
     }
 
 }
