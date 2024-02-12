@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -204,5 +207,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    private Bitmap getImage(){
+        // Get the Drawable from ImageView
+        Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
+        Bitmap bitmapImage = ((BitmapDrawable) drawable).getBitmap();
+        return bitmapImage;
+
     }
 }
