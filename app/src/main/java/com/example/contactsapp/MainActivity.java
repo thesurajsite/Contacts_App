@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.example.contactsapp.R;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);
 
+        Bitmap bitmapImage=getImage();
 
         for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(R.drawable.contact_image,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(), contact.getX(), contact.getLinkedin()));
+            arrContact.add(new ContactModel(bitmapImage,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(), contact.getX(), contact.getLinkedin()));
         }
 
         arrContactSorting();
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                                 name=number;
                             }
 
-                            arrContact.add(new ContactModel(R.drawable.contact_image,contactID,name, number,instagram,x,linkedin));
+                            arrContact.add(new ContactModel(bitmapImage,contactID,name, number,instagram,x,linkedin));
                             adapter.notifyItemInserted(arrContact.size()-1);
 //                            recyclerview.scrollToPosition(arrContact.size()-1);
 
@@ -201,16 +204,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==123){
-            profileImage.setImageURI(data.getData());
-            profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if(requestCode==123 && resultCode == RESULT_OK && data != null ) {
+//            profileImage.setImageURI(data.getData());
+//            profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Uri imageUri = data.getData();
 
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                profileImage.setImageBitmap(bitmap);
+                profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private Bitmap getImage(){
-        // Get the Drawable from ImageView
         Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
         Bitmap bitmapImage = ((BitmapDrawable) drawable).getBitmap();
         return bitmapImage;

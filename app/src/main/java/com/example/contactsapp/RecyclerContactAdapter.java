@@ -2,6 +2,7 @@ package com.example.contactsapp;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -9,6 +10,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,7 +69,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
     @Override
     @SuppressWarnings("all")  //<<<<< here
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imgContact.setImageResource(arrContact.get(position).img);
+
+        holder.imgContact.setImageBitmap(arrContact.get(position).img);
         holder.txtName.setText(arrContact.get(position).name);
         holder.txtNumber.setText(arrContact.get(position).number);
 
@@ -100,6 +105,9 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bitmap bitmapImage=getImage();
+
+
                 Dialog dialog=new Dialog(context);
                 dialog.setContentView(R.layout.add_update_layout);
 
@@ -138,7 +146,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
 
                             if(name.isEmpty()){ name=number; }
 
-                            arrContact.set(position, new ContactModel(R.drawable.contact_image,contactID,name,number,instagram,x,linkedin));
+                            arrContact.set(position, new ContactModel(bitmapImage,contactID,name,number,instagram,x,linkedin));
                             notifyItemChanged(position);
 
                             contactsDao.updateCon(new Contacts(contactID,name,number,instagram,x,linkedin));
@@ -433,6 +441,13 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 return o1.name.compareToIgnoreCase(o2.name);
             }
         });
+
+    }
+
+    private Bitmap getImage(){
+        Drawable drawable = context.getResources().getDrawable(R.drawable.contact_image);
+        Bitmap bitmapImage = ((BitmapDrawable) drawable).getBitmap();
+        return bitmapImage;
 
     }
 }

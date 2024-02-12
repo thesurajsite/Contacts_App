@@ -1,11 +1,13 @@
 package com.example.contactsapp;
 
+import android.graphics.Bitmap;
+
 public class ContactModel {
-    int img;
+    Bitmap img;
     long id;
     String name, number, instagram, x, linkedin;
 
-    public ContactModel(int img, long id, String name, String number, String instagram, String x, String linkedin) {
+    public ContactModel(Bitmap img, long id, String name, String number, String instagram, String x, String linkedin) {
         this.img = img;
         this.id = id;
         this.name = name;
