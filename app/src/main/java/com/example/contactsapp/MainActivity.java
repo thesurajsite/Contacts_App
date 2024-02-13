@@ -99,12 +99,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                //BITMAP TO BYTEARRAY
-                byte[] byteArrayImage=bitmapToByteArray(bitmapImage123);
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        //BITMAP TO BYTEARRAY
+                        byte[] byteArrayImage=bitmapToByteArray(bitmapImage123);
+
                         String name="",number="",instagram="",x="",linkedin="";
 
                         //Get ContactID from SharedPreferences
