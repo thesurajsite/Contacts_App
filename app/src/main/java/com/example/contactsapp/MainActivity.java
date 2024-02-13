@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -25,6 +26,7 @@ import com.example.contactsapp.R;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerContactAdapter adapter;
     RecyclerView recyclerview;
     ImageView profileImage;
+    Bitmap bitmapImage123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Contacts> arrContacts =(ArrayList<Contacts>) databaseHelper.contactsDao().getAllContacts();
 
         recyclerview=findViewById(R.id.recyclercontact);
-        if(recyclerview==null) Log.w("error111", "true");
         adapter=new RecyclerContactAdapter(this, arrContact, arrContacts, databaseHelper);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);
@@ -55,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmapImage=getImage();
 
         for (Contacts contact : arrContacts) {
-            arrContact.add(new ContactModel(bitmapImage,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(), contact.getX(), contact.getLinkedin()));
+            Bitmap byteImageToBitmapImage=byteArrayToBitmap(contact.getImage());
+            arrContact.add(new ContactModel(byteImageToBitmapImage,contact.getId(), contact.getName(), contact.getNumber(), contact.getInstagram(), contact.getX(), contact.getLinkedin()));
         }
 
         arrContactSorting();
@@ -81,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
                 Button saveButton=dialog.findViewById(R.id.saveButton);
                 ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
 
+                // DEFAULT BITMAP IMAGE IF IMAGE PICKER IS NOT CLICKED
+                Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                profileImage.setImageBitmap(bitmap);
+                profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                bitmapImage123=bitmap;
+
                 profileImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -88,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
+                //BITMAP TO BYTEARRAY
+                byte[] byteArrayImage=bitmapToByteArray(bitmapImage123);
 
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -109,12 +122,12 @@ public class MainActivity extends AppCompatActivity {
                                 name=number;
                             }
 
-                            arrContact.add(new ContactModel(bitmapImage,contactID,name, number,instagram,x,linkedin));
+                            arrContact.add(new ContactModel(bitmapImage123,contactID,name, number,instagram,x,linkedin));
                             adapter.notifyItemInserted(arrContact.size()-1);
 //                            recyclerview.scrollToPosition(arrContact.size()-1);
 
                             // Add the contact to the database
-                            databaseHelper.contactsDao().addCon(new Contacts(contactID,name, number, instagram,x,linkedin));
+                            databaseHelper.contactsDao().addCon(new Contacts(byteArrayImage,contactID,name, number, instagram,x,linkedin));
 
                             //UPDATE SharedPreferences ContactID
                             long updatedID=contactID+1;
@@ -214,10 +227,22 @@ public class MainActivity extends AppCompatActivity {
                 profileImage.setImageBitmap(bitmap);
                 profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+                bitmapImage123=bitmap;
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        else{
+            Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            profileImage.setImageBitmap(bitmap);
+            profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            bitmapImage123=bitmap;
+        }
+
+
     }
 
     private Bitmap getImage(){
@@ -225,5 +250,16 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmapImage = ((BitmapDrawable) drawable).getBitmap();
         return bitmapImage;
 
+    }
+
+
+    private byte[] bitmapToByteArray(Bitmap bitmapImage123) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmapImage123.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    private Bitmap byteArrayToBitmap(byte[] byteArray) {
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
 }

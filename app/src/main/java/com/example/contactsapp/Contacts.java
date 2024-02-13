@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "contacts")
 public class Contacts {
+
+    @ColumnInfo(name = "image")
+    private byte[] image;
     @PrimaryKey(autoGenerate = true)
     private long id;
     @ColumnInfo(name = "name")
@@ -23,13 +26,22 @@ public class Contacts {
     @ColumnInfo(name = "x")
     private String x;
 
-    Contacts(long id, String name, String number, String instagram, String x, String linkedin){
+    Contacts(byte[] image, long id, String name, String number, String instagram, String x, String linkedin){
+        this.image = image;
         this.id = id;
         this.name = name;
         this.number = number;
         this.instagram = instagram;
         this.x = x;
         this.linkedin = linkedin;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public long getId() {

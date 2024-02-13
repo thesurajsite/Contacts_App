@@ -30,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -142,6 +143,9 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                         x=addX.getText().toString();
                         linkedin=addLinkedin.getText().toString();
 
+                        //BITMAP TO BYTEARRAY
+                        byte[] byteArrayImage=bitmapToByteArray(bitmapImage);
+
                         if(!name.isEmpty() || !number.isEmpty()){
 
                             if(name.isEmpty()){ name=number; }
@@ -149,7 +153,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                             arrContact.set(position, new ContactModel(bitmapImage,contactID,name,number,instagram,x,linkedin));
                             notifyItemChanged(position);
 
-                            contactsDao.updateCon(new Contacts(contactID,name,number,instagram,x,linkedin));
+                            contactsDao.updateCon(new Contacts(byteArrayImage,contactID,name,number,instagram,x,linkedin));
 
                             //SORTING THE ARRAY AGAIN
                             arrContactSorting();
@@ -449,5 +453,11 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         Bitmap bitmapImage = ((BitmapDrawable) drawable).getBitmap();
         return bitmapImage;
 
+    }
+
+    private byte[] bitmapToByteArray(Bitmap bitmapImage) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
     }
 }
