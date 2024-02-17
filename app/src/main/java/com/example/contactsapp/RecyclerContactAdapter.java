@@ -32,6 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -50,6 +52,9 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
     ArrayList<Contacts> arrContacts;
     DatabaseHelper databaseHelper;
     ContactsDao contactsDao;
+    Bitmap bitmap;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+
 
 
     //*********** CHANGES HERE *************
@@ -139,7 +144,8 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                 profileImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openImagePicker();
+//                        openImagePicker();
+                       // Bitmap bitmapImage123=RecyclerContactAdapter.this.bitmap;
                     }
                 });
 
@@ -460,28 +466,32 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         return stream.toByteArray();
     }
 
-    private void openImagePicker() {
-        Intent iGallery = new Intent(Intent.ACTION_PICK);
-        iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        ((Activity) context).startActivityForResult(iGallery, 123);
-    }
+//    private void openImagePicker() {
+//        Intent iGallery = new Intent(Intent.ACTION_PICK);
+//        iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        ((Activity) context).startActivityForResult(iGallery, 456);
+//    }
 
 
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 123 && resultCode == RESULT_OK && data != null) {
-            // Get the image URI from the data Intent
-            Uri imageUri = data.getData();
 
-            // Convert URI to bitmap if needed
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        if (requestCode == 456 && resultCode == RESULT_OK && data != null) {
+//            // Get the image URI from the data Intent
+//            Uri imageUri = data.getData();
+//
+//            // Convert URI to bitmap if needed
+//            bitmap = null;
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
 
-        }
-    }
+
+
 
     private Bitmap byteArrayToBitmap(byte[] byteArray) {
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
