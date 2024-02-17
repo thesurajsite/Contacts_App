@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);
 
-        Bitmap bitmapImage=getImage();
 
         for (Contacts contact : arrContacts) {
             Bitmap byteImageToBitmapImage=byteArrayToBitmap(contact.getImage());
@@ -84,12 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 Button saveButton=dialog.findViewById(R.id.saveButton);
                 ImageView deleteButton=dialog.findViewById(R.id.deleteButton);
 
-                // DEFAULT BITMAP IMAGE IF IMAGE PICKER IS NOT CLICKED
-                Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
-                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                profileImage.setImageBitmap(bitmap);
-                profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                bitmapImage123=bitmap;
+               defaultBitmapImage();
 
                 profileImage.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -220,8 +214,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==123 && resultCode == RESULT_OK && data != null ) {
-//            profileImage.setImageURI(data.getData());
-//            profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Uri imageUri = data.getData();
 
             try {
@@ -237,20 +229,13 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-            profileImage.setImageBitmap(bitmap);
+            Bitmap bitmapImage123 = ((BitmapDrawable) drawable).getBitmap();
+            profileImage.setImageBitmap(bitmapImage123);
             profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            bitmapImage123=bitmap;
+//            bitmapImage123=bitmap;
         }
 
-
-    }
-
-    private Bitmap getImage(){
-        Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
-        Bitmap bitmapImage = ((BitmapDrawable) drawable).getBitmap();
-        return bitmapImage;
 
     }
 
@@ -263,5 +248,15 @@ public class MainActivity extends AppCompatActivity {
 
     private Bitmap byteArrayToBitmap(byte[] byteArray) {
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
+    private void defaultBitmapImage(){
+        // DEFAULT BITMAP IMAGE IF IMAGE PICKER IS NOT CLICKED
+        Drawable drawable = getResources().getDrawable(R.drawable.contact_image);
+        bitmapImage123 = ((BitmapDrawable) drawable).getBitmap();
+        profileImage.setImageBitmap(bitmapImage123);
+        profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+
     }
 }
